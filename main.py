@@ -11,9 +11,6 @@ if __name__ == '__main__':
     appLabel = QQuickView()
     appLabel.setSource(QUrl('map.qml'))
 
-    # Show the Label
-    appLabel.show()
-
     # Execute the Application and Exit
     myApp.exec_()
     sys.exit()
