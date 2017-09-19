@@ -4,8 +4,6 @@ import QtLocation 5.6
 import QtPositioning 5.6
 
 Item {
-    width: 512
-    height: 512
     visible: true
 
     Plugin {

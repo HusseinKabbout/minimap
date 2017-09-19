@@ -37,12 +37,15 @@ if __name__ == '__main__':
     # Create Qml reference
     view = QQuickWidget()
     view.setSource(QUrl('map.qml'))
+    view.setMinimumSize(200, 200)
+    view.setResizeMode(view.SizeRootObjectToView)
     # Add widgets to layout
     window.layout().addWidget(search)
     window.layout().addWidget(searchButton)
     window.layout().addWidget(ssearch)
     window.layout().addWidget(ssearchButton)
     window.layout().addWidget(view)
+    window.setMinimumSize(500, 500)
     # Show the Layout
     window.show()
     # Execute the Application and Exit
