@@ -1,43 +1,50 @@
 import sys
-from PyQt5.QtCore import QUrl
-from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QVBoxLayout
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtQml import QQmlApplicationEngine
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtQml import *
+from PyQt5.QtQuickWidgets import *
 
 
 def val(self):
     s = search.text()
-    ctx = engine.rootContext()
+    ctx = view.rootContext()
     ctx.setContextProperty("g", s)
-    engine.rootObjects()[0]
+    view.rootContext
 
 
 def vall(self):
     s = ssearch.text()
-    ctx = engine.rootContext()
+    ctx = view.rootContext()
     ctx.setContextProperty("f", s)
-    engine.rootObjects()[0]
+    view.rootContext
 
 
 # Main Function
 if __name__ == '__main__':
     # Create main app
     myApp = QApplication(sys.argv)
-
-    engine = QQmlApplicationEngine()
-    engine.load(QUrl('map.qml'))
-    # create search option
+    # create search option and Button
     search = QLineEdit()
-    searchButton = QPushButton("searchg")
+    searchButton = QPushButton("Search for X Coordinate")
     searchButton.clicked.connect(val)
 
     ssearch = QLineEdit()
-    ssearchButton = QPushButton("searchf")
+    ssearchButton = QPushButton("Search for Y Coordinate")
     ssearchButton.clicked.connect(vall)
+    # Create Layout
+    window = QWidget()
+    window.setLayout(QVBoxLayout())
+    # Create Qml reference
+    view = QQuickWidget()
+    view.setSource(QUrl('map.qml'))
+    # Add widgets to layout
+    window.layout().addWidget(search)
+    window.layout().addWidget(searchButton)
+    window.layout().addWidget(ssearch)
+    window.layout().addWidget(ssearchButton)
+    window.layout().addWidget(view)
+    # Show the Layout
+    window.show()
     # Execute the Application and Exit
-    search.show()
-    ssearch.show()
-    searchButton.show()
-    ssearchButton.show()
     myApp.exec_()
     sys.exit()
