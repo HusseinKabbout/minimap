@@ -1,5 +1,6 @@
-import QtQuick 2.0
+import QtQuick 2.1
 import QtQuick.Window 2.0
+import QtQuick.Controls 1.4
 import QtLocation 5.6
 import QtPositioning 5.6
 
@@ -10,18 +11,17 @@ Window {
 
     Plugin {
         id: mapPlugin
-        name: "osm" // "mapboxgl", "esri", ...
-        // specify plugin parameters if necessary
-        // PluginParameter {
-        //     name:
-        //     value:
-        // }
+        name: "osm"
     }
 
     Map {
+        id: map
         anchors.fill: parent
         plugin: mapPlugin
-        center: QtPositioning.coordinate(59.91, 10.75) // Oslo
+        center {
+            latitude: g
+            longitude: f
+        }
         zoomLevel: 14
     }
 }
