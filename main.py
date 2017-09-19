@@ -7,14 +7,30 @@ from PyQt5.QtQuickWidgets import *
 
 
 def val(self):
-    s = search.text()
-    f = re.split(r',*', s)
-    a = f[0]
-    b = f[1]
-    ctx = view.rootContext()
-    ctx.setContextProperty("g", a)
-    ctx.setContextProperty("f", b)
-    view.rootContext
+    try:
+        s = search.text()
+        f = re.split(r',*', s)
+        a = f[0]
+        b = f[1]
+        ctx = view.rootContext()
+        ctx.setContextProperty("g", a)
+        ctx.setContextProperty("f", b)
+        view.rootContext
+    except Exception:
+        msgBox = QMessageBox()
+        msgBox.setWindowTitle("Error 404")
+        msgBox.setText("Invalid Coordinates")
+        msgBox.addButton(QPushButton("exit"), QMessageBox.RejectRole)
+        ret = msgBox.exec_()
+    else:
+        s = search.text()
+        f = re.split(r',*', s)
+        a = f[0]
+        b = f[1]
+        ctx = view.rootContext()
+        ctx.setContextProperty("g", a)
+        ctx.setContextProperty("f", b)
+        view.rootContext
 
 
 # Main Function
