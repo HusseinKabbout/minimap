@@ -1,1 +1,1 @@
-#minimap
+This is a minimap

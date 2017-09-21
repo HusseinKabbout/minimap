@@ -9,12 +9,12 @@ from PyQt5.QtQuickWidgets import *
 def val(self):
     try:
         s = search.text()
-        f = re.split(r',*', s)
-        a = f[0]
-        b = f[1]
+        f = re.split(r'(\d+\.?\d*),?\s+(\d+\.?\d*)', s)
+        a = f[1]
+        b = f[2]
         ctx = view.rootContext()
-        ctx.setContextProperty("g", a)
-        ctx.setContextProperty("f", b)
+        ctx.setContextProperty("la", a)
+        ctx.setContextProperty("lo", b)
         view.rootContext
     except Exception:
         msgBox = QMessageBox()
@@ -22,9 +22,10 @@ def val(self):
         msgBox.setText("Invalid Coordinates")
         msgBox.addButton(QPushButton("exit"), QMessageBox.RejectRole)
         ret = msgBox.exec_()
+        search.clear()
     else:
         s = search.text()
-        f = re.split(r',*', s)
+        f = re.split(r'(\d+\.?\d*),?\s+(\d+\.?\d*)', s)
         a = f[0]
         b = f[1]
         ctx = view.rootContext()
@@ -41,7 +42,6 @@ if __name__ == '__main__':
     search = QLineEdit()
     searchButton = QPushButton("Search for coordinates")
     searchButton.clicked.connect(val)
-
     # Create Layout
     window = QWidget()
     window.setLayout(QVBoxLayout())
