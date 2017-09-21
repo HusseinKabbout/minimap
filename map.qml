@@ -11,28 +11,27 @@ Item {
 
     Map {
         id: map
-        property var ipn: la
-        property var bpn: lo
+        objectName: "map"
+        property double lat: 59.91
+        property double lon: 10.75
         visible: true
         anchors.fill: parent
         plugin: mapPlugin
         center {
-            latitude: (map.ipn != undefined) ? map.ipn : 59.91
-            longitude: (map.bpn != undefined) ? map.bpn : 10.75
+            latitude: lat
+            longitude: lon
         }
         zoomLevel: 14
 
         MapQuickItem {
             id: marker
-            anchorPoint.x: image.width
+            objectName: "marker"
+            visible: false
+            anchorPoint.x: 0.5 * image.width
             anchorPoint.y: image.height
-            coordinate {
-                latitude: (map.ipn != undefined) ? map.ipn : 59.91
-                longitude: (map.bpn != undefined) ? map.bpn : 10.75
-            }
             sourceItem: Image {
                 id: image
-                source: "/home/hka/Documents/minimap/image.png"
+                source: "image.png"
             }
         }
     }

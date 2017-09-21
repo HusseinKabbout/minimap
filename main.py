@@ -4,34 +4,23 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtQml import *
 from PyQt5.QtQuickWidgets import *
+from PyQt5.QtPositioning import *
 
 
-def val(self):
+def search(lineEdit, rootObject):
     try:
-        s = search.text()
-        f = re.split(r'(\d+\.?\d*),?\s+(\d+\.?\d*)', s)
-        a = f[1]
-        b = f[2]
-        ctx = view.rootContext()
-        ctx.setContextProperty("la", a)
-        ctx.setContextProperty("lo", b)
-        view.rootContext
-    except Exception:
-        msgBox = QMessageBox()
-        msgBox.setWindowTitle("Error 404")
-        msgBox.setText("Invalid Coordinates")
-        msgBox.addButton(QPushButton("exit"), QMessageBox.RejectRole)
-        ret = msgBox.exec_()
-        search.clear()
-    else:
-        s = search.text()
-        f = re.split(r'(\d+\.?\d*),?\s+(\d+\.?\d*)', s)
-        a = f[0]
-        b = f[1]
-        ctx = view.rootContext()
-        ctx.setContextProperty("g", a)
-        ctx.setContextProperty("f", b)
-        view.rootContext
+        f = re.split(r'(\d+\.?\d*),?\s+(\d+\.?\d*)', lineEdit.text())
+        lat = float(f[1])
+        lon = float(f[2])
+        mapObject = rootObject.findChild(QObject, "map")
+        markerObject = rootObject.findChild(QObject, "marker")
+        mapObject.setProperty("lat", lat)
+        mapObject.setProperty("lon", lon)
+        markerObject.setProperty("coordinate", QGeoCoordinate(lat, lon))
+        markerObject.setProperty("visible", True)
+    except Exception as e:
+        QMessageBox.warning(None, "Invalid Coordinate", "Invalid coordinate")
+        lineEdit.selectAll()
 
 
 # Main Function
@@ -39,9 +28,8 @@ if __name__ == '__main__':
     # Create main app
     myApp = QApplication(sys.argv)
     # create search option and Button
-    search = QLineEdit()
+    lineEdit = QLineEdit()
     searchButton = QPushButton("Search for coordinates")
-    searchButton.clicked.connect(val)
     # Create Layout
     window = QWidget()
     window.setLayout(QVBoxLayout())
@@ -50,11 +38,14 @@ if __name__ == '__main__':
     view.setSource(QUrl('map.qml'))
     view.setMinimumSize(200, 200)
     view.setResizeMode(view.SizeRootObjectToView)
+    rootObject = view.rootObject()
     # Add widgets to layout
-    window.layout().addWidget(search)
+    window.layout().addWidget(lineEdit)
     window.layout().addWidget(searchButton)
     window.layout().addWidget(view)
     window.setMinimumSize(500, 500)
+    # Connect search slot
+    searchButton.clicked.connect(lambda: search(lineEdit, rootObject))
     # Show the Layout
     window.show()
     # Execute the Application and Exit
