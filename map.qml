@@ -35,20 +35,17 @@ Item {
                 source: "image.png"
             }
         }
+        MapQuickItem {
+            id: secMarker
+            objectName: "secMarker"
+            visible: false
+            property var titl
+            anchorPoint.x: 0.5 * image.width
+            anchorPoint.y: image.height
+            sourceItem: Column{
+                    Image {id: imag; source: "image.png"}
+                    Text {text: "" + secMarker.titl; font.bold: true}
+                }
+            }
+        }
     }
-
-    XmlListModel {
-        id: xmlModel
-        source: "coordinates.xml"
-        query: "/rss/channel/item"
-
-        XmlRole { name: "title"; query: "title/string()" }
-        XmlRole { name: "coordinate"; query: "coordinate/string()" }
-    }
-
-    ListView {
-    width: 180; height: 300
-    model: xmlModel
-    delegate: Text { text: title + ": " + coordinate }
-    }
-}
