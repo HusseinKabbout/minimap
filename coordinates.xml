@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <items>
+        <item>
+            <title>Oslo</title>
+            <latitude>59.91</latitude>
+            <longitude>10.75</longitude>
+        </item>
+        <item>
+            <title>Kazakhstan</title>
+            <latitude>45</latitude>
+            <longitude>78</longitude>
+        </item>
+        <item>
+            <title>Nigeria</title>
+            <latitude>12</latitude>
+            <longitude>12</longitude>
+        </item>
+    </items>
