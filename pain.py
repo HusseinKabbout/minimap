@@ -10,8 +10,9 @@ from PyQt5.QtGui import *
 
 
 class MarkerItem(object):
-    def __init__(self, position):
+    def __init__(self, position, title):
         self._position = position
+        self._title = title
 
     def position(self):
         return self._position
@@ -19,11 +20,19 @@ class MarkerItem(object):
     def setPosition(self, value):
         self._position = value
 
+    def title(self):
+        return self._title
+
+    def setTitle(self, value):
+        self._title = value
+
 
 class MarkerModel(QAbstractListModel):
     PositionRole = Qt.UserRole + 1
+    TitleRole = Qt.UserRole + 2
 
-    _roles = {PositionRole: QByteArray(b"markerPosition")}
+    _roles = {PositionRole: QByteArray(
+        b"markerPosition"), TitleRole: QByteArray(b"markerTitle")}
 
     def __init__(self, parent=None):
         QAbstractListModel.__init__(self, parent)
@@ -43,6 +52,9 @@ class MarkerModel(QAbstractListModel):
         if role == MarkerModel.PositionRole:
             return marker.position()
 
+        elif role == MarkerModel.TitleRole:
+            return marker.title()
+
         return QVariant()
 
     def setData(self, index, value, role=Qt.EditRole):
@@ -50,6 +62,9 @@ class MarkerModel(QAbstractListModel):
             marker = self._markers[index.row()]
             if role == MarkerModel.PositionRole:
                 marker.setPosition(value)
+
+            if role == MarkerModel.TitleRole:
+                marker.setTitle(value)
 
             self.dataChanged.emit(index, index)
             return True

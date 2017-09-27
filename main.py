@@ -16,15 +16,13 @@ def openList(lineEdit, rootObject):
     url = listEdit.text()
     if url:
         XML = url
-        model = MarkerModel()
         parXml = untangle.parse(XML)
         for item in parXml.items.item:
             titl = item.title.cdata
             lati = item.latitude.cdata
             longi = item.longitude.cdata
-            model.addMarker(MarkerItem(QPointF(float(lati), float(longi))))
-            context = view.rootContext()
-            context.setContextProperty('markerModel', model)
+            model.addMarker(
+                MarkerItem(QPointF(float(lati), float(longi)), titl))
         mapObject = rootObject.findChild(QObject, "map")
         mapObject.setProperty("zoomLevel", 2)
 
@@ -57,9 +55,11 @@ if __name__ == '__main__':
     # Create Layout
     window = QWidget()
     window.setLayout(QVBoxLayout())
-    # Create Qml reference
+    # Create Qml reference and create new Model
     view = QQuickWidget()
-
+    model = MarkerModel()
+    context = view.rootContext()
+    context.setContextProperty('markerModel', model)
     view.setSource(QUrl('map.qml'))
     view.setMinimumSize(200, 200)
     view.setResizeMode(view.SizeRootObjectToView)

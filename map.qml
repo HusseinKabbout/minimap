@@ -8,7 +8,7 @@ Item {
     property int marker_size: 16
     Plugin {
         id: mapPlugin
-        name: "osm"
+        name: "mapboxgl"
     }
 
     Map {
@@ -37,17 +37,14 @@ Item {
             }
         }
         MapItemView {
-            id: markerSec
             model: markerModel
-            objectName: "secMarker"
-            property var titl
             delegate: MapQuickItem{
                 anchorPoint: Qt.point(2.5, 2.5)
                 coordinate: QtPositioning.coordinate(markerPosition.x, markerPosition.y)
                 zoomLevel: 0
                 sourceItem: Column{
                         Image {id: imag; source: "image.png"}
-                        Text {text: "" + markerSec.titl; font.bold: true}
+                        Text {text: "" + markerTitle; font.bold: true}
                 }
             }
         }
