@@ -1,10 +1,11 @@
 import QtQuick 2.0
-import QtLocation 5.6
-import QtPositioning 5.6
-import QtQuick.XmlListModel 2.0
+import QtQuick.Window 2.0
+import QtLocation 5.5
+import QtPositioning 5.5
 
 Item {
     id: myItem
+    property int marker_size: 16
     Plugin {
         id: mapPlugin
         name: "osm"
@@ -35,17 +36,20 @@ Item {
                 source: "image.png"
             }
         }
-        MapQuickItem {
-            id: secMarker
+        MapItemView {
+            id: markerSec
+            model: markerModel
             objectName: "secMarker"
-            visible: false
             property var titl
-            anchorPoint.x: 0.5 * image.width
-            anchorPoint.y: image.height
-            sourceItem: Column{
-                    Image {id: imag; source: "image.png"}
-                    Text {text: "" + secMarker.titl; font.bold: true}
+            delegate: MapQuickItem{
+                anchorPoint: Qt.point(2.5, 2.5)
+                coordinate: QtPositioning.coordinate(markerPosition.x, markerPosition.y)
+                zoomLevel: 0
+                sourceItem: Column{
+                        Image {id: imag; source: "image.png"}
+                        Text {text: "" + markerSec.titl; font.bold: true}
                 }
             }
         }
     }
+}

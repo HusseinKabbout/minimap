@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtQml import *
 from PyQt5.QtQuickWidgets import *
 from PyQt5.QtPositioning import *
+from pain import *
 
 
 def openList(lineEdit, rootObject):
@@ -14,17 +15,18 @@ def openList(lineEdit, rootObject):
     listEdit.setText(fileName[0])
     url = listEdit.text()
     if url:
-        XML = '/home/hka/Documents/minimap/coordinates.xml'
-        o = untangle.parse(XML)
-        secObject = rootObject.findChild(QObject, "secMarker")
-        for item in o.rss.channel.item:
+        XML = url
+        model = MarkerModel()
+        parXml = untangle.parse(XML)
+        for item in parXml.items.item:
             titl = item.title.cdata
             lati = item.latitude.cdata
             longi = item.longitude.cdata
-            secObject.setProperty("titl", titl)
-            secObject.setProperty("coordinate", QGeoCoordinate(
-                float(lati), float(longi)))
-        secObject.setProperty("visible", True)
+            model.addMarker(MarkerItem(QPointF(float(lati), float(longi))))
+            context = view.rootContext()
+            context.setContextProperty('markerModel', model)
+        mapObject = rootObject.findChild(QObject, "map")
+        mapObject.setProperty("zoomLevel", 2)
 
 
 def search(lineEdit, rootObject):
@@ -57,7 +59,8 @@ if __name__ == '__main__':
     window.setLayout(QVBoxLayout())
     # Create Qml reference
     view = QQuickWidget()
-    view.setSource(QUrl('qml.qml'))
+
+    view.setSource(QUrl('map.qml'))
     view.setMinimumSize(200, 200)
     view.setResizeMode(view.SizeRootObjectToView)
     rootObject = view.rootObject()
@@ -72,6 +75,7 @@ if __name__ == '__main__':
     searchButton.clicked.connect(lambda: search(lineEdit, rootObject))
     listButton.clicked.connect(lambda: openList(lineEdit, rootObject))
     # Show the Layout
+    window.setWindowTitle("Who needs goole maps")
     window.show()
     # Execute the Application and Exit
     myApp.exec_()
