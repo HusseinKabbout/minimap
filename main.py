@@ -49,12 +49,28 @@ if __name__ == '__main__':
     myApp = QApplication(sys.argv)
     # create search option and Button
     lineEdit = QLineEdit()
-    searchButton = QPushButton("Search for coordinates")
+    searchButton = QPushButton()
+    searchButton.resize(searchButton.sizeHint())
+    icon = QIcon()
+    icon.addPixmap(QPixmap(
+        "icon.png"), QIcon.Normal, QIcon.Off)
+    searchButton.setIcon(icon)
     listEdit = QLineEdit()
-    listButton = QPushButton("Open List of coordinates")
+    listButton = QPushButton()
+    listButton.resize(listButton.sizeHint())
+    icon = QIcon()
+    icon.addPixmap(QPixmap(
+        "iconn.png"), QIcon.Normal, QIcon.Off)
+    listButton.setIcon(icon)
     # Create Layout
     window = QWidget()
     window.setLayout(QVBoxLayout())
+    controlS = QWidget()
+    controlS.setLayout(QHBoxLayout())
+    controlS.setMaximumSize(495, 50)
+    controlX = QWidget()
+    controlX.setLayout(QHBoxLayout())
+    controlX.setMaximumSize(495, 50)
     # Create Qml reference and create new Model
     view = QQuickWidget()
     model = MarkerModel()
@@ -65,10 +81,12 @@ if __name__ == '__main__':
     view.setResizeMode(view.SizeRootObjectToView)
     rootObject = view.rootObject()
     # Add widgets to layout
-    window.layout().addWidget(lineEdit)
-    window.layout().addWidget(searchButton)
-    window.layout().addWidget(listEdit)
-    window.layout().addWidget(listButton)
+    controlS.layout().addWidget(lineEdit)
+    controlS.layout().addWidget(searchButton)
+    controlX.layout().addWidget(listEdit)
+    controlX.layout().addWidget(listButton)
+    window.layout().addWidget(controlS)
+    window.layout().addWidget(controlX)
     window.layout().addWidget(view)
     window.setMinimumSize(500, 500)
     # Connect search slot
