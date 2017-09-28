@@ -5,7 +5,6 @@ import QtPositioning 5.5
 
 Item {
     id: myItem
-    property int marker_size: 16
     Plugin {
         id: mapPlugin
         name: "mapboxgl"
@@ -14,8 +13,8 @@ Item {
     Map {
         id: map
         objectName: "map"
-        property double lat: 59.91
-        property double lon: 10.75
+        property double lat: 47.368649
+        property double lon: 8.5391825
         visible: true
         anchors.fill: parent
         plugin: mapPlugin

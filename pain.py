@@ -28,8 +28,8 @@ class MarkerItem(object):
 
 
 class MarkerModel(QAbstractListModel):
-    PositionRole = Qt.UserRole + 1
-    TitleRole = Qt.UserRole + 2
+    PositionRole = Qt.UserRole
+    TitleRole = Qt.UserRole + 1
 
     _roles = {PositionRole: QByteArray(
         b"markerPosition"), TitleRole: QByteArray(b"markerTitle")}
