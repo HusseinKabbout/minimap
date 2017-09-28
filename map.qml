@@ -12,7 +12,7 @@ Item {
 
     Map {
         id: map
-        objectName: "map"
+        objectName: "mapboxgl"
         property double lat: 47.368649
         property double lon: 8.5391825
         visible: true
@@ -23,6 +23,14 @@ Item {
             longitude: lon
         }
         zoomLevel: 14
+
+        ListView {
+            height: 1
+            model: map
+            delegate: Text {
+                text: "Latitude: " + center.latitude + " Longitude: " + center.longitude
+                }
+            }
 
         MapQuickItem {
             id: marker

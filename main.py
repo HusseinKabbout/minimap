@@ -91,9 +91,10 @@ if __name__ == '__main__':
     window.setMinimumSize(500, 500)
     # Connect search slot
     searchButton.clicked.connect(lambda: search(lineEdit, rootObject))
+    lineEdit.returnPressed.connect(lambda: search(lineEdit, rootObject))
     listButton.clicked.connect(lambda: openList(lineEdit, rootObject))
     # Show the Layout
-    window.setWindowTitle("Who needs goole maps")
+    window.setWindowTitle("Minimap")
     window.show()
     # Execute the Application and Exit
     myApp.exec_()
