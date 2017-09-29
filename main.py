@@ -23,7 +23,7 @@ def openList(lineEdit, rootObject):
             longi = item.longitude.cdata
             model.addMarker(
                 MarkerItem(QPointF(float(lati), float(longi)), titl))
-        mapObject = rootObject.findChild(QObject, "map")
+        mapObject = rootObject.findChild(QObject, "mapboxgl")
         mapObject.setProperty("zoomLevel", 2)
 
 
@@ -32,7 +32,7 @@ def search(lineEdit, rootObject):
         f = re.split(r'(\-?\d+\.?\d*),?\s+(\-?\d+\.?\d*)', lineEdit.text())
         lat = float(f[1])
         lon = float(f[2])
-        mapObject = rootObject.findChild(QObject, "map")
+        mapObject = rootObject.findChild(QObject, "mapboxgl")
         markerObject = rootObject.findChild(QObject, "marker")
         mapObject.setProperty("lat", lat)
         mapObject.setProperty("lon", lon)
