@@ -31,8 +31,9 @@ def search(lineEdit, rootObject):
     try:
         f = re.match(
             r'^([+-]?\d+\.?\d*),?\s+([+-]?\d+\.?\d*)$', lineEdit.text())
-        lat = float(f[1])
-        lon = float(f[2])
+        if float(f[1]) <= 90 and float(f[2]) <= 180:
+            lat = float(f[1])
+            lon = float(f[2])
         mapObject = rootObject.findChild(QObject, "mapboxgl")
         markerObject = rootObject.findChild(QObject, "marker")
         mapObject.setProperty("lat", lat)
