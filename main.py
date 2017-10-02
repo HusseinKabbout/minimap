@@ -30,7 +30,7 @@ def openList(lineEdit, rootObject):
 def search(lineEdit, rootObject):
     try:
         f = re.split(
-            r'(\-?\+?\d+\.?\d*),?\s+(\-?\+?\d+\.?\d*)', lineEdit.text())
+            r'^([+-]?\d+\.?\d*),?\s+([+-]?\d+\.?\d*)$', lineEdit.text())
         lat = float(f[1])
         lon = float(f[2])
         mapObject = rootObject.findChild(QObject, "mapboxgl")
