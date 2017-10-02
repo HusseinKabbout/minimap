@@ -47,7 +47,7 @@ Item {
                     onClicked: {
                         ToolTip.timeout = 2000
                         ToolTip.visible = true
-                        ToolTip.text = qsTr("Coordinates: " + marker.coordinate.latitude + ", " + marker.coordinate.longitude)
+                        ToolTip.text = qsTr("Coordinates: %1, %2").arg(marker.coordinate.latitude).arg(marker.coordinate.longitude)
                     }
                 }
             }
@@ -68,7 +68,7 @@ Item {
                                 onClicked: {
                                     ToolTip.timeout = 2000
                                     ToolTip.visible = true
-                                    ToolTip.text = qsTr("Coordinates: " + markerPosition.x + ", " + markerPosition.y)
+                                    ToolTip.text = qsTr("Coordinates: %1, %2".arg(markerPosition.x).arg(markerPosition.y))
                                 }
                             }
                         }
