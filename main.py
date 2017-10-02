@@ -29,7 +29,7 @@ def openList(lineEdit, rootObject):
 
 def search(lineEdit, rootObject):
     try:
-        f = re.split(
+        f = re.match(
             r'^([+-]?\d+\.?\d*),?\s+([+-]?\d+\.?\d*)$', lineEdit.text())
         lat = float(f[1])
         lon = float(f[2])
