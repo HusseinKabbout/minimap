@@ -29,7 +29,7 @@ Item {
             height: 1
             model: map
             delegate: Text {
-                text: "Latitude: " + center.latitude + " Longitude: " + center.longitude
+                text: "Latitude: " + (center.latitude).toFixed(3) + " Longitude: " + (center.longitude).toFixed(3)
                 }
             }
 
