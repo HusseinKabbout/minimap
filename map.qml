@@ -74,7 +74,7 @@ Item {
                         }
 
                         Text {
-                            text: "" + markerTitle
+                            text: markerTitle
                             font.bold: true
                         }
                 }
