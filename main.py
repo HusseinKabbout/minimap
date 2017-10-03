@@ -9,6 +9,21 @@ from PyQt5.QtPositioning import *
 from pain import *
 
 
+def selectColor(comboBox, rootObject):
+    selected = comboBox.currentText()
+    paintObject = rootObject.findChild(QObject, "paint")
+    if selected == "blue":
+        paintObject.setProperty("lineColor", "blue")
+    if selected == "red":
+        paintObject.setProperty("lineColor", "red")
+    if selected == "yellow":
+        paintObject.setProperty("lineColor", "yellow")
+    if selected == "black":
+        paintObject.setProperty("lineColor", "black")
+    if selected == "white":
+        paintObject.setProperty("lineColor", "white")
+
+
 def openList(lineEdit, rootObject):
     fileName = QFileDialog.getOpenFileName(
         None, "Open", "/home", "Only Xml(*.xml)")
@@ -49,7 +64,14 @@ def search(lineEdit, rootObject):
 if __name__ == '__main__':
     # Create main app
     myApp = QApplication(sys.argv)
-    # create search option and Button
+    # create color_list
+    colors = []
+    colors.append("blue")
+    colors.append("red")
+    colors.append("yellow")
+    colors.append("black")
+    colors.append("white")
+    # create gui
     lineEdit = QLineEdit()
     searchButton = QPushButton()
     searchButton.resize(searchButton.sizeHint())
@@ -64,6 +86,14 @@ if __name__ == '__main__':
     icon.addPixmap(QPixmap(
         "iconn.png"), QIcon.Normal, QIcon.Off)
     listButton.setIcon(icon)
+    comboBox = QComboBox()
+    comboBox.addItems(colors)
+    selectColorBtn = QPushButton()
+    selectColorBtn.resize(selectColorBtn.sizeHint())
+    icon = QIcon()
+    icon.addPixmap(QPixmap(
+        "color.png"), QIcon.Normal, QIcon.Off)
+    selectColorBtn.setIcon(icon)
     # Create Layout
     window = QWidget()
     window.setLayout(QVBoxLayout())
@@ -73,6 +103,9 @@ if __name__ == '__main__':
     controlX = QWidget()
     controlX.setLayout(QHBoxLayout())
     controlX.setMaximumSize(495, 50)
+    jsonLine = QWidget()
+    jsonLine.setLayout(QHBoxLayout())
+    jsonLine.setMaximumSize(495, 50)
     # Create Qml reference and create new Model
     view = QQuickWidget()
     model = MarkerModel()
@@ -87,14 +120,18 @@ if __name__ == '__main__':
     controlS.layout().addWidget(searchButton)
     controlX.layout().addWidget(listEdit)
     controlX.layout().addWidget(listButton)
+    jsonLine.layout().addWidget(comboBox)
+    jsonLine.layout().addWidget(selectColorBtn)
     window.layout().addWidget(controlS)
     window.layout().addWidget(controlX)
+    window.layout().addWidget(jsonLine)
     window.layout().addWidget(view)
     window.setMinimumSize(500, 500)
     # Connect search slot
     searchButton.clicked.connect(lambda: search(lineEdit, rootObject))
     lineEdit.returnPressed.connect(lambda: search(lineEdit, rootObject))
     listButton.clicked.connect(lambda: openList(lineEdit, rootObject))
+    selectColorBtn.clicked.connect(lambda: selectColor(comboBox, rootObject))
     # Show the Layout
     window.setWindowTitle("Minimap")
     window.show()

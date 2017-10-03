@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.0
-import QtLocation 5.5
+import QtLocation 5.9
 import QtPositioning 5.5
 
 Item {
@@ -79,6 +79,38 @@ Item {
                         }
                 }
             }
+        }
+        MapParameter {
+        type: "source"
+        property var name: "coordinates"
+        property var sourceType: "geojson"
+        property var data: '{ "type": "FeatureCollection", "features": \
+            [{ "type": "Feature", "properties": {}, "geometry": { \
+            "type": "LineString", "coordinates": [[ 8.541484, \
+            47.366850 ], [8.542171, 47.370018],[8.545561, 47.369233]]}}]}'
+        }
+
+        MapParameter {
+            type: "layer"
+            property var name: "layer"
+            property var layerType: "line"
+            property var source: "coordinates"
+            property var before: "road-label-small"
+        }
+
+        MapParameter {
+            objectName: "paint"
+            type: "paint"
+            property var layer: "layer"
+            property var lineColor: "black"
+            property var lineWidth: 8.0
+        }
+
+        MapParameter {
+            type: "layout"
+            property var layer: "layer"
+            property var lineJoin: "round"
+            property var lineCap: "round"
         }
     }
 }
