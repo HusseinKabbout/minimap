@@ -24,7 +24,7 @@ def selectColor(comboBox, rootObject):
         paintObject.setProperty("lineColor", "white")
 
 
-def openList(lineEdit, rootObject):
+def openList(listEdit, rootObject):
     fileName = QFileDialog.getOpenFileName(
         None, "Open", "/home", "Only Xml(*.xml)")
     listEdit.setText(fileName[0])
@@ -130,7 +130,7 @@ if __name__ == '__main__':
     # Connect search slot
     searchButton.clicked.connect(lambda: search(lineEdit, rootObject))
     lineEdit.returnPressed.connect(lambda: search(lineEdit, rootObject))
-    listButton.clicked.connect(lambda: openList(lineEdit, rootObject))
+    listButton.clicked.connect(lambda: openList(listEdit, rootObject))
     selectColorBtn.clicked.connect(lambda: selectColor(comboBox, rootObject))
     # Show the Layout
     window.setWindowTitle("Minimap")
