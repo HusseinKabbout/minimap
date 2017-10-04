@@ -12,16 +12,7 @@ from pain import *
 def selectColor(comboBox, rootObject):
     selected = comboBox.currentText()
     paintObject = rootObject.findChild(QObject, "paint")
-    if selected == "blue":
-        paintObject.setProperty("lineColor", "blue")
-    if selected == "red":
-        paintObject.setProperty("lineColor", "red")
-    if selected == "yellow":
-        paintObject.setProperty("lineColor", "yellow")
-    if selected == "black":
-        paintObject.setProperty("lineColor", "black")
-    if selected == "white":
-        paintObject.setProperty("lineColor", "white")
+    paintObject.setProperty("lineColor", selected)
 
 
 def openList(listEdit, rootObject):
