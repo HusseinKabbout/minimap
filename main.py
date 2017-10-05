@@ -68,14 +68,14 @@ if __name__ == '__main__':
     searchButton.resize(searchButton.sizeHint())
     icon = QIcon()
     icon.addPixmap(QPixmap(
-        "icon.png"), QIcon.Normal, QIcon.Off)
+        "icons/searchIcon.png"), QIcon.Normal, QIcon.Off)
     searchButton.setIcon(icon)
     listEdit = QLineEdit()
     listButton = QPushButton()
     listButton.resize(listButton.sizeHint())
     icon = QIcon()
     icon.addPixmap(QPixmap(
-        "iconn.png"), QIcon.Normal, QIcon.Off)
+        "icons/listsearchIcon.png"), QIcon.Normal, QIcon.Off)
     listButton.setIcon(icon)
     comboBox = QComboBox()
     comboBox.addItems(colors)
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     selectColorBtn.resize(selectColorBtn.sizeHint())
     icon = QIcon()
     icon.addPixmap(QPixmap(
-        "color.png"), QIcon.Normal, QIcon.Off)
+        "icons/changecolorIcon.png"), QIcon.Normal, QIcon.Off)
     selectColorBtn.setIcon(icon)
     # Create Layout
     window = QWidget()

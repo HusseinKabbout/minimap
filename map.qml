@@ -64,7 +64,7 @@ Item {
             anchorPoint.y: image.height
             sourceItem: Image {
                 id: image
-                source: "image.png"
+                source: "icons/markerIcon.png"
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
@@ -85,7 +85,7 @@ Item {
                 sourceItem: Column{
                         Image {
                             id: imag
-                            source: "image.png"
+                            source: "icons/markerIcon.png"
                             MouseArea{
                                 anchors.fill: parent
                                 onClicked: {
