@@ -1,11 +1,14 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.0
 import QtLocation 5.9
 import QtPositioning 5.5
+import QtQuick.LocalStorage 2.0 as Sql
+
 
 Item {
     id: myItem
+
     Plugin {
         id: mapPlugin
         name: "mapboxgl"
@@ -30,6 +33,26 @@ Item {
             model: map
             delegate: Text {
                 text: "Latitude: " + (center.latitude).toFixed(3) + " Longitude: " + (center.longitude).toFixed(3)
+                }
+            }
+
+            MouseArea{
+                id: mouseArea
+                property var positionRoot: map.toCoordinate(Qt.point(mouseX, mouseY))
+                anchors.fill: parent
+                onClicked: {
+                    var db = Sql.LocalStorage.openDatabaseSync("db_attr", "1.0", "DB for Storing Attributes!", 1000000)
+                    db.transaction(
+                        function(tx) {
+                        tx.executeSql("CREATE TABLE IF NOT EXISTS Pin(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name VARCHAR(255), Latitude FLOAT, Longitude FLOAT)")
+                        tx.executeSql("INSERT INTO Pin VALUES(NULL, ?, ?, ?)", ["Hussein", (positionRoot.latitude).toFixed(3), (positionRoot.longitude).toFixed(3) ])
+                        var print = tx.executeSql("SELECT * FROM Pin")
+                        for(var i = 0; i < print.rows.length; i++) {
+                            var dbItem = print.rows.item(i)
+                        console.warn("ID: " + dbItem.ID + ", Name: " + dbItem.Name + ", Latitude: " + dbItem.Latitude + ", Longitude: " + dbItem.Longitude )
+                            }
+                        }
+                    )
                 }
             }
 
@@ -66,6 +89,7 @@ Item {
                             MouseArea{
                                 anchors.fill: parent
                                 onClicked: {
+
                                     ToolTip.timeout = 2000
                                     ToolTip.visible = true
                                     ToolTip.text = qsTr("Coordinates: %1, %2".arg(markerPosition.x).arg(markerPosition.y))
