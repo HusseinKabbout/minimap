@@ -10,7 +10,7 @@ Window {
     id: mypopDialog
     title: "Set Attributes"
     width: 450
-    height: 100
+    height: 150
     flags: Qt.Dialog
     modality: Qt.WindowModal
     property var sqlPosition
@@ -44,5 +44,11 @@ Window {
                 )
             }
         }
+    }
+    Button{
+        text: "Close"
+        x: 342
+        y: 100
+        onClicked: mypopDialog.close()
     }
 }
