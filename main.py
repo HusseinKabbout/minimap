@@ -7,6 +7,7 @@ from PyQt5.QtQml import *
 from PyQt5.QtQuickWidgets import *
 from PyQt5.QtPositioning import *
 from pain import *
+import xml.etree.ElementTree as ET
 
 
 def selectColor(comboBox, rootObject):
@@ -21,16 +22,32 @@ def openList(listEdit, rootObject):
     listEdit.setText(fileName[0])
     url = listEdit.text()
     if url:
-        XML = url
-        parXml = untangle.parse(XML)
-        for item in parXml.items.item:
-            titl = item.title.cdata
-            lati = item.latitude.cdata
-            longi = item.longitude.cdata
-            model.addMarker(
-                MarkerItem(QPointF(float(lati), float(longi)), titl))
-        mapObject = rootObject.findChild(QObject, "mapboxgl")
-        mapObject.setProperty("zoomLevel", 2)
+        if checkBox.isChecked():
+            list = []
+            tree = ET.parse(url)
+            root = tree.getroot()
+            for a in root.findall('.//{'
+                                  'http://www.opengis.net/gml}coordinates'):
+                list.append(a.text)
+                for e in list:
+                    part = e.split(",")
+                    lati = part[0]
+                    longi = part[1]
+                model.addMarker(
+                    MarkerItem(QPointF(float(lati), float(longi)), "GeoXml"))
+                mapObject = rootObject.findChild(QObject, "mapboxgl")
+                mapObject.setProperty("zoomLevel", 2)
+        else:
+            XML = url
+            parXml = untangle.parse(XML)
+            for item in parXml.items.item:
+                titl = item.title.cdata
+                lati = item.latitude.cdata
+                longi = item.longitude.cdata
+                model.addMarker(
+                    MarkerItem(QPointF(float(lati), float(longi)), titl))
+            mapObject = rootObject.findChild(QObject, "mapboxgl")
+            mapObject.setProperty("zoomLevel", 2)
 
 
 def search(lineEdit, rootObject):
@@ -85,6 +102,7 @@ if __name__ == '__main__':
     icon.addPixmap(QPixmap(
         "icons/changecolorIcon.png"), QIcon.Normal, QIcon.Off)
     selectColorBtn.setIcon(icon)
+    checkBox = QCheckBox("import GML")
     # Create Layout
     window = QWidget()
     window.setLayout(QVBoxLayout())
@@ -111,6 +129,7 @@ if __name__ == '__main__':
     controlS.layout().addWidget(searchButton)
     controlX.layout().addWidget(listEdit)
     controlX.layout().addWidget(listButton)
+    controlX.layout().addWidget(checkBox)
     jsonLine.layout().addWidget(comboBox)
     jsonLine.layout().addWidget(selectColorBtn)
     window.layout().addWidget(controlS)
