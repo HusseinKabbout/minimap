@@ -23,20 +23,27 @@ def openList(listEdit, rootObject):
     url = listEdit.text()
     if url:
         if checkBox.isChecked():
-            list = []
+            i = 0
+            titl = []
             tree = ET.parse(url)
             root = tree.getroot()
-            for a in root.findall('.//{'
-                                  'http://www.opengis.net/gml}coordinates'):
-                list.append(a.text)
-                for e in list:
-                    part = e.split(",")
+            for elem in root.findall('.//{'
+                                     'http://ogr.maptools.org/}Name'):
+                titl.append(elem.text)
+            for elem in root.findall('.//{'
+                                     'http://www.opengis.net/gml}coordinates'):
+                coord = []
+                coord.append(elem.text)
+                for elem in coord:
+                    part = elem.split(",")
                     lati = part[0]
                     longi = part[1]
-                model.addMarker(
-                    MarkerItem(QPointF(float(lati), float(longi)), "GeoXml"))
-                mapObject = rootObject.findChild(QObject, "mapboxgl")
-                mapObject.setProperty("zoomLevel", 2)
+                    model.addMarker(
+                        MarkerItem(QPointF(
+                            float(lati), float(longi)), titl[i]))
+                    mapObject = rootObject.findChild(QObject, "mapboxgl")
+                    mapObject.setProperty("zoomLevel", 2)
+                    i = i + 1
         else:
             XML = url
             parXml = untangle.parse(XML)
