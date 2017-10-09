@@ -13,19 +13,19 @@
 
   <gml:featureMember>
     <ogr:geoXml fid="geoXml.0">
-      <ogr:geometryProperty><gml:Point srsName="EPSG:4326"><gml:coordinates>35.369063342639,33.5646886559923</gml:coordinates></gml:Point></ogr:geometryProperty>
+      <ogr:geometryProperty><gml:Point srsName="EPSG:4326"><gml:coordinates>33.5646886559923,35.369063342639</gml:coordinates></gml:Point></ogr:geometryProperty>
       <ogr:Name>Saida</ogr:Name>
     </ogr:geoXml>
   </gml:featureMember>
   <gml:featureMember>
     <ogr:geoXml fid="geoXml.1">
-      <ogr:geometryProperty><gml:Point srsName="EPSG:4326"><gml:coordinates>8.54801405826425,47.3812284648773</gml:coordinates></gml:Point></ogr:geometryProperty>
+      <ogr:geometryProperty><gml:Point srsName="EPSG:4326"><gml:coordinates>47.3812284648773,8.54801405826425</gml:coordinates></gml:Point></ogr:geometryProperty>
       <ogr:Name>Zürich</ogr:Name>
     </ogr:geoXml>
   </gml:featureMember>
   <gml:featureMember>
     <ogr:geoXml fid="geoXml.2">
-      <ogr:geometryProperty><gml:Point srsName="EPSG:4326"><gml:coordinates>-83.0823545002196,42.3318907846635</gml:coordinates></gml:Point></ogr:geometryProperty>
+      <ogr:geometryProperty><gml:Point srsName="EPSG:4326"><gml:coordinates>42.3318907846635,-83.0823545002196</gml:coordinates></gml:Point></ogr:geometryProperty>
       <ogr:Name>Detroit</ogr:Name>
     </ogr:geoXml>
   </gml:featureMember>
