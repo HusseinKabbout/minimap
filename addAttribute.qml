@@ -33,7 +33,7 @@ Window {
                 var db = Sql.LocalStorage.openDatabaseSync("db_attr", "1.0", "DB for Storing Attributes!", 1000000)
                 db.transaction(
                     function(tx) {
-                    tx.executeSql("CREATE TABLE IF NOT EXISTS Pin(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name VARCHAR(255), Latitude FLOAT, Longitude FLOAT)")
+                    tx.executeSql("CREATE TABLE IF NOT EXISTS Pin(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name VARCHAR(255), Latitude FLOAT, Longitude FLOAT, unique (Name))")
                     tx.executeSql("INSERT INTO Pin VALUES(NULL, ?, ?, ?)", [text.text, (mypopDialog.sqlPosition.latitude).toFixed(3), (mypopDialog.sqlPosition.longitude).toFixed(3) ])
                     var print = tx.executeSql("SELECT * FROM Pin")
                     for(var i = 0; i < print.rows.length; i++) {
@@ -42,6 +42,7 @@ Window {
                         }
                     }
                 )
+                mypopDialog.close()
             }
         }
     }
