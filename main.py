@@ -100,7 +100,7 @@ if __name__ == '__main__':
     icon.addPixmap(QPixmap(
         "icons/searchIcon.png"), QIcon.Normal, QIcon.Off)
     searchButton.setIcon(icon)
-    listLabel = QLabel("Import XML-coordinates")
+    listLabel = QLabel("Import XML-coordinates \nand pin them on Map")
     listLabel.setFixedWidth(160)
     listEdit = QLineEdit()
     listEdit.setFixedWidth(285)
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     icon.addPixmap(QPixmap(
         "icons/listsearchIcon.png"), QIcon.Normal, QIcon.Off)
     listButton.setIcon(icon)
-    colorLabel = QLabel("Change color")
+    colorLabel = QLabel("Change color of Line")
     colorLabel.setFixedWidth(160)
     comboBox = QComboBox()
     comboBox.setFixedWidth(285)
