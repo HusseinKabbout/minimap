@@ -26,7 +26,6 @@ Item {
             longitude: lon
         }
         zoomLevel: 14
-
         ListView {
             height: 1
             model: map
@@ -130,4 +129,28 @@ Item {
             property var lineCap: "round"
         }
     }
+/*    Canvas {                          //Create Grid
+        id: canvas
+        anchors.fill : parent
+        property int distance: 25
+        onPaint: {
+            var context = getContext("2d")
+            context.lineWidth = 1
+            context.strokeStyle = "black"
+            context.beginPath()
+            var gridRows = height/distance;
+            for(var i=0; i < gridRows+1; i++){
+                context.moveTo(0, distance*i);
+                context.lineTo(width, distance*i);
+            }
+
+            var gridColumns = width/distance
+            for(var j=0; j < gridColumns+1; j++){
+                context.moveTo(distance*j, 0);
+                context.lineTo(distance*j, height);
+            }
+            context.closePath()
+            context.stroke()
+        }
+    } */
 }
