@@ -21,8 +21,19 @@ def openList(listEdit, rootObject):
         None, "Open", "/home", "Only Xml(*.xml)")
     listEdit.setText(fileName[0])
     url = listEdit.text()
-    if url:
-        if checkBox.isChecked():
+    try:
+        XML = url
+        parXml = untangle.parse(XML)
+        for item in parXml.items.item:
+            titl = item.title.cdata
+            lati = item.latitude.cdata
+            longi = item.longitude.cdata
+            model.addMarker(
+                MarkerItem(QPointF(float(lati), float(longi)), titl))
+        mapObject = rootObject.findChild(QObject, "mapboxgl")
+        mapObject.setProperty("zoomLevel", 2)
+    except Exception:
+        try:
             i = 0
             titl = []
             tree = ET.parse(url)
@@ -44,17 +55,8 @@ def openList(listEdit, rootObject):
                     mapObject = rootObject.findChild(QObject, "mapboxgl")
                     mapObject.setProperty("zoomLevel", 2)
                     i = i + 1
-        else:
-            XML = url
-            parXml = untangle.parse(XML)
-            for item in parXml.items.item:
-                titl = item.title.cdata
-                lati = item.latitude.cdata
-                longi = item.longitude.cdata
-                model.addMarker(
-                    MarkerItem(QPointF(float(lati), float(longi)), titl))
-            mapObject = rootObject.findChild(QObject, "mapboxgl")
-            mapObject.setProperty("zoomLevel", 2)
+        except Exception:
+            pass
 
 
 def search(lineEdit, rootObject):
@@ -109,7 +111,6 @@ if __name__ == '__main__':
     icon.addPixmap(QPixmap(
         "icons/listsearchIcon.png"), QIcon.Normal, QIcon.Off)
     listButton.setIcon(icon)
-    checkBox = QCheckBox("import GML")
     colorLabel = QLabel("Change color")
     colorLabel.setFixedWidth(160)
     comboBox = QComboBox()
@@ -130,9 +131,6 @@ if __name__ == '__main__':
     controlX = QWidget()
     controlX.setLayout(QHBoxLayout())
     controlX.setMaximumSize(495, 50)
-    controlXx = QWidget()
-    controlXx.setLayout(QHBoxLayout())
-    controlXx.setMaximumSize(495, 28)
     jsonLine = QWidget()
     jsonLine.setLayout(QHBoxLayout())
     jsonLine.setMaximumSize(495, 50)
@@ -152,13 +150,11 @@ if __name__ == '__main__':
     controlX.layout().addWidget(listLabel)
     controlX.layout().addWidget(listEdit)
     controlX.layout().addWidget(listButton)
-    controlXx.layout().addWidget(checkBox)
     jsonLine.layout().addWidget(colorLabel)
     jsonLine.layout().addWidget(comboBox)
     jsonLine.layout().addWidget(selectColorBtn)
     window.layout().addWidget(controlS)
     window.layout().addWidget(controlX)
-    window.layout().addWidget(controlXx)
     window.layout().addWidget(jsonLine)
     window.layout().addWidget(view)
     window.setMinimumSize(500, 500)
