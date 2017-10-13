@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtQml import *
 from PyQt5.QtQuickWidgets import *
 from PyQt5.QtPositioning import *
-from pain import *
+from pinModel import *
 import xml.etree.ElementTree as ET
 
 
