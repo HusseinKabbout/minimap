@@ -119,44 +119,42 @@ class Minimap():
             None, "Open", "/home", "Only Xml(*.xml)")
         self.listEdit.setText(fileName[0])
         url = self.listEdit.text()
-        try:
-            XML = url
-            parXml = untangle.parse(XML)
-            for item in parXml.items.item:
-                titl = item.title.cdata
-                lati = item.latitude.cdata
-                longi = item.longitude.cdata
-                self.model.addMarker(
-                    MarkerItem(QPointF(float(lati), float(longi)), titl))
-            self.mapObject = self.rootObject.findChild(QObject, "mapboxgl")
-            self.mapObject.setProperty("zoomLevel", 2)
-        except Exception:
-            try:
-                i = 0
-                titl = []
-                tree = ET.parse(url)
-                root = tree.getroot()
-                for elem in root.findall('.//{'
-                                         'http://ogr.maptools.org/}Name'):
-                    titl.append(elem.text)
-                for elem in root.findall('.//{'
-                                         'http://www.opengis.net/gml}'
-                                         'coordinates'):
-                    coord = []
-                    coord.append(elem.text)
-                    for elem in coord:
-                        part = elem.split(",")
-                        lati = part[0]
-                        longi = part[1]
-                        self.model.addMarker(
-                            MarkerItem(QPointF(
-                                float(lati), float(longi)), titl[i]))
-                        self.mapObject = self.rootObject.findChild(
-                            QObject, "mapboxgl")
-                        self.mapObject.setProperty("zoomLevel", 2)
-                        i = i + 1
-            except Exception:
-                pass
+        tree = ET.parse(url)
+        root = tree.getroot()
+        r = root.find('item')
+        if r:
+            for elem in root.findall('item'):
+                titl = elem.find('title').text
+                lati = elem.find('latitude').text
+                longi = elem.find('longitude').text
+                self.model.addMarker(MarkerItem(QPointF(
+                    float(lati), float(longi)), titl))
+                self.mapObject = self.rootObject.findChild(QObject, "mapboxgl")
+                self.mapObject.setProperty("zoomLevel", 2)
+        else:
+            i = 0
+            titl = []
+            tree = ET.parse(url)
+            root = tree.getroot()
+            for elem in root.findall('.//{'
+                                     'http://ogr.maptools.org/}Name'):
+                titl.append(elem.text)
+            for elem in root.findall('.//{'
+                                     'http://www.opengis.net/gml}'
+                                     'coordinates'):
+                coord = []
+                coord.append(elem.text)
+                for elem in coord:
+                    part = elem.split(",")
+                    lati = part[0]
+                    longi = part[1]
+                    self.model.addMarker(
+                        MarkerItem(QPointF(
+                            float(lati), float(longi)), titl[i]))
+                    self.mapObject = self.rootObject.findChild(
+                        QObject, "mapboxgl")
+                    self.mapObject.setProperty("zoomLevel", 2)
+                    i = i + 1
 
     def search(self):
         try:
