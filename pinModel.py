@@ -9,7 +9,7 @@ from PyQt5.QtPositioning import *
 from PyQt5.QtGui import *
 
 
-class MarkerItem(object):
+class MarkerItem():
     def __init__(self, position, title):
         self._position = position
         self._title = title
